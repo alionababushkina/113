@@ -137,10 +137,23 @@ namespace GameFifteen
             return temp;
 
         }
-            
-                }
 
+        public static Game FromCSV(string file)
+        {
+            string[] csv = File.ReadAllLines(file);
+            List<int> list = new List<int>();
+            for (int i = 0; i < csv.Count(); i++)
+            {
+                for (int j = 0; j < csv[i].Split(';').Count(); j++)
+                {
+                    list.Add(Convert.ToInt32(csv[i].Split(';')[j]));
+                }
             }
+            Game game = new Game(list.ToArray<int>());
+            return game;
+        }
+    }
+}
        
 
         

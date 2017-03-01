@@ -11,10 +11,13 @@ namespace GameFifteen
         static void Main(string[] args)
         {
             Game NewGame = new Game(1, 2, 3, 4, 5, 6, 7, 8, 0);
-            NewGame.Print();
+            Game game = Game.FromCSV("Книга1.csv");
 
             while (1 == 1)
             {
+                Console.Clear();
+                NewGame.Print();
+
                 Console.Write("Введите число ");
                 
 
