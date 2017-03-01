@@ -3,16 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace GameFifteen
 {
     class Program
     {
+        
         static void Main(string[] args)
         {
+            
+
             Game NewGame = new Game(1, 2, 3, 4, 5, 6, 7, 8, 0);
             Game game = Game.FromCSV("Книга1.csv");
 
+            
             while (1 == 1)
             {
                 Console.Clear();
@@ -27,8 +32,11 @@ namespace GameFifteen
             }
             
             }
- 
-        }
+
+       
+
+
+    }
         }
     
 

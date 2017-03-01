@@ -47,11 +47,13 @@ namespace GameFifteen
             }
           }
 
+
+
         internal void Print()
         {
-           for(int x=0; x < size; x++)
+            for (int x = 0; x < size; x++)
             {
-                for(int y=0; y < size; y++)
+                for (int y = 0; y < size; y++)
                 {
                     Console.Write(Field[x, y] + " ");
                 }
@@ -101,12 +103,12 @@ namespace GameFifteen
                 }
                 else
                 {
-                    Console.WriteLine("Невозможный ход");
+                   // Console.WriteLine("Невозможный ход");
                 }
             }
             catch
             {
-                Console.WriteLine("Значения нет!");
+                //Console.WriteLine("Значения нет!");
             }
               }
 
@@ -138,6 +140,8 @@ namespace GameFifteen
 
         }
 
+       
+
         public static Game FromCSV(string file)
         {
             string[] csv = File.ReadAllLines(file);
@@ -149,8 +153,8 @@ namespace GameFifteen
                     list.Add(Convert.ToInt32(csv[i].Split(';')[j]));
                 }
             }
-            Game game = new Game(list.ToArray<int>());
-            return game;
+           
+            return new Game(list.ToArray<int>());
         }
     }
 }

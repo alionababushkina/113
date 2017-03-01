@@ -17,6 +17,7 @@ namespace GameFifteen
 
         public int this[int x, int y]//индексатор 
         {
+
             get
             {
                 return button[x, y];
