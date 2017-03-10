@@ -9,62 +9,55 @@ namespace GameFifteen
 {
     class Game
     {
-        public readonly Point[] Array;
-        public readonly ArrayButton Field;
+        public readonly int side;
         public readonly int size;
+        public readonly Value[,] Field;
         public readonly int Length;
-       
-            
+        public Dictionary<int, Point> Dictionary;
 
-        public Game( params int[] value)//параметр метода, принимающий переменное кол-во аргументов
+
+        public Game(params int[] value)//параметр метода, принимающий переменное кол-во аргументов
         {
-    
+            Dictionary = new Dictionary<int, Point>();
             double lenght = Math.Sqrt(value.Length);
             size = Convert.ToInt32(lenght);
-
             
-            if (Math.Abs(size - lenght) != 0)
+            if (Math.Abs(size - lenght) != 0) 
             {
-                throw new System.ArgumentException("Неверное заполнение поля \n");
+                throw new System.ArgumentException("Неверное заполнение поля \n ");
 
             }
-
-            Field = new ArrayButton(size);
-            Array = new Point[value.Length];
-
+            
             int m = 0;
+            Field = new Value[side, side];
+           
 
-            for (int x = 0; x < size; x++)
+            for (int i = 0; i < side; i++)
             {
-                for (int y = 0; y < size; y++)
+                for (int j = 0; j < side; j++)
                 {
-                    Field[x, y] = value[m];
-                    if (m == value.Length)
-                        m = 0;
-                    Array[value[m]] = new Point(x, y);
+                    Field[i, j] = new Value(value[m]);
+                    Dictionary.Add(value[m], new Point(i, j));
                     m++;
                 }
             }
-          }
+        }
 
+      
 
-
-        internal void Print()
+        public Value this[int val1, int val2]
         {
-            for (int x = 0; x < size; x++)
+            get
             {
-                for (int y = 0; y < size; y++)
-                {
-                    Console.Write(Field[x, y] + " ");
-                }
-                Console.WriteLine();
+                return Field[val1, val2];
+            }
+            set
+            {
+                Field[val1, val2] = value;
             }
         }
 
-        public Point GetLocation(int value)//переданное значение
-        {
-            return Array[value];
-        }
+
 
         private bool SearchValue(int value)
         {
@@ -78,86 +71,46 @@ namespace GameFifteen
             }
         }
 
-        public void Shift(int value)
+        public Point GetLocation(int value)
         {
-            try
-            {
-                Point ValueLocation = GetLocation(value);
-                int x = ValueLocation.X;
-                int y = ValueLocation.Y;
-
-                Point NullLocation = GetLocation(0);
-                int x0 = NullLocation.X;
-                int y0 = NullLocation.Y;
-
-                Point temp = new Point(-1, -1);
-                if (Math.Abs(x - x0) == 1 && Math.Abs(y - y0) == 0 ||
-                Math.Abs(y - y0) == 1 && Math.Abs(x - x0) == 0)
-                {
-                    Field[x, y] = 0;
-                    Field[x0, y0] = value;
-
-                    temp = Array[value];
-                    Array[0] = Array[value];
-                    Array[value] = temp;
-                }
-                else
-                {
-                   // Console.WriteLine("Невозможный ход");
-                }
-            }
-            catch
-            {
-                //Console.WriteLine("Значения нет!");
-            }
-              }
-
-       public bool EndGame()
-        {
-            bool temp = false;
-            int value = 1;
-            for (int x=0; x < size; x++)
-            {
-                for(int y=0; y <size; y++)
-                {
-                    if (Field[x,y] == value)
-                    {
-                        temp = true;
-                        value++;
-                        if (value == Length)
-                        {
-                            value = 0;
-                        }
-                       
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                }
-            }
-            return temp;
-
+            return Dictionary[value];
         }
 
-       
 
-        public static Game FromCSV(string file)
+        public virtual void Shift(int value)
         {
-            string[] csv = File.ReadAllLines(file);
-            List<int> list = new List<int>();
-            for (int i = 0; i < csv.Count(); i++)
+            if (Dictionary[value] - Dictionary[0] == 1)
             {
-                for (int j = 0; j < csv[i].Split(';').Count(); j++)
-                {
-                    list.Add(Convert.ToInt32(csv[i].Split(';')[j]));
-                }
+                Point positionNull = Dictionary[0];
+                this[Dictionary[0].X, Dictionary[0].Y] = new Value(value);
+                this[Dictionary[value].X, Dictionary[value].Y] = new Value(0);
+                Dictionary[0] = Dictionary[value];
+                Dictionary[value] = positionNull;
             }
-           
-            return new Game(list.ToArray<int>());
+
+            else throw new ArgumentException("Неверное значение ");
+                // Console.WriteLine("Невозможный ход");
+            }
         }
-    }
+
 }
+    //public static Game FromCSV(string file)
+    //    {
+    //        string[] csv = File.ReadAllLines(file);
+    //        List<int> list = new List<int>();
+    //        for (int i = 0; i < csv.Count(); i++)
+    //        {
+    //            for (int j = 0; j < csv[i].Split(';').Count(); j++)
+    //            {
+    //                list.Add(Convert.ToInt32(csv[i].Split(';')[j]));
+    //            }
+    //        }
+           
+    //        return new Game(list.ToArray<int>());
+    //    }
+    
+
+   
        
 
         
