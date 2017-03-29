@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace GameFifteen
 {
-    class Value
+    class Value1
     {
         public int Number;
 
-        public Value(int number)
+        public Value1(int number)
         {
             this.Number = number;
         }

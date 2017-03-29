@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GameFifteen
 {
-    class Game2 : Game
+    class Game2 : Game, IPlayable
     {
       public Game2(params int[] values)
             : base(values)
@@ -14,7 +14,7 @@ namespace GameFifteen
 
         }
         
-        public int[]  Randomize()
+        public virtual int[]  Randomize()
         {
 
             int[] numbers = new int[side * side];
@@ -65,33 +65,49 @@ namespace GameFifteen
                 }
             }
             numbers[numbers.Length - 1] = 0;
-
             return numbers;
+            
         }
 
 
 
-        public bool Success()
+        public virtual bool IsFinished
         {
-
-            for (int i = 0; i < side; i++)
+            get
             {
-                for (int j = 0; j < side - 1; j++)
+                int[] massive = new int[side * side];
+                for (int i = 0; i < side; i++)
                 {
-                    if ((i != side - 1) || (j != side - 1))
+                    for (int j = 0; j < side - 1; j++)
                     {
-                        if ((this[i, j].Number != this[i, j + 1].Number - 1) || (Field[side - 1, side - 1].Number != 0))
-            {
+                        if ((i != side - 1) || (j != side - 1))
+                        {
+                            if ((Field[i, j] != Field[i, j + 1] - 1))
+                            {
 
-                return false;
-            }
-        
+                                return false;
+                            }
+
+                        }
                     }
                 }
+                return true;
             }
-            return true;
-
         }
+
+        public override void Shift(int value)
+        {
+            base.Shift(value);
+        }
+
+        public override int SizeField
+        {
+            get
+            {
+                  return base.SizeField;
+            }
+        }
+            
     }
 }
 

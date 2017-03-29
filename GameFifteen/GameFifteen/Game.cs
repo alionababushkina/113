@@ -11,7 +11,7 @@ namespace GameFifteen
     {
         public readonly int side;
         public readonly int size;
-        public readonly Value[,] Field;
+        public readonly int[,] Field;
         public readonly int Length;
         public Dictionary<int, Point> Dictionary;
 
@@ -29,14 +29,14 @@ namespace GameFifteen
             }
             
             int m = 0;
-            Field = new Value[side, side];
+            Field = new int[side, side];
            
 
             for (int i = 0; i < side; i++)
             {
                 for (int j = 0; j < side; j++)
                 {
-                    Field[i, j] = new Value(value[m]);
+                    Field[i, j] = (value[m]);
                     Dictionary.Add(value[m], new Point(i, j));
                     m++;
                 }
@@ -45,7 +45,7 @@ namespace GameFifteen
 
       
 
-        public Value this[int val1, int val2]
+        public int this[int val1, int val2]
         {
             get
             {
@@ -53,7 +53,7 @@ namespace GameFifteen
             }
             set
             {
-                Field[val1, val2] = value;
+                Field[val1, val2]= value;
             }
         }
 
@@ -82,8 +82,8 @@ namespace GameFifteen
             if (Dictionary[value] - Dictionary[0] == 1)
             {
                 Point positionNull = Dictionary[0];
-                this[Dictionary[0].X, Dictionary[0].Y] = new Value(value);
-                this[Dictionary[value].X, Dictionary[value].Y] = new Value(0);
+                this[Dictionary[0].X, Dictionary[0].Y] = value;
+                this[Dictionary[value].X, Dictionary[value].Y] = 0; 
                 Dictionary[0] = Dictionary[value];
                 Dictionary[value] = positionNull;
             }
@@ -91,6 +91,14 @@ namespace GameFifteen
             else throw new ArgumentException("Неверное значение ");
                 // Console.WriteLine("Невозможный ход");
             }
+        public virtual int SizeField
+        {
+            get
+            {
+                return side;
+            }
+        }
+
         }
 
 }

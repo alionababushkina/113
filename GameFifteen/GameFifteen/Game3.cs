@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GameFifteen
 {
-    class Game3 : Game2
+    class Game3 : Game2, IPlayable
     {
         private List<int> History;
 
@@ -33,7 +33,13 @@ namespace GameFifteen
             History.Remove(last);
             this.Shift(last);
         }
+
     }
-  }
+
+    }
+
+        
+    
+  
 
   
