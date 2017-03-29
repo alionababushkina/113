@@ -16,7 +16,7 @@ namespace GameFifteen
         public Dictionary<int, Point> Dictionary;
 
 
-        public Game(params int[] value)//параметр метода, принимающий переменное кол-во аргументов
+        public Game(params int[] value)
         {
             Dictionary = new Dictionary<int, Point>();
             double lenght = Math.Sqrt(value.Length);
